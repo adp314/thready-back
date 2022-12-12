@@ -7,17 +7,6 @@ import { UserModel } from "../model/user.model.js";
 import bcrypt from "bcrypt";
 import { ThreadModel } from "../model/thread.model.js";
 
-
-// threadRouter.post("/create", isAuth, attachCurrentUser, async (req, res) => {
-//     try {
-        
-//     }
-//     catch {
-//         console.log(err);
-//         return res.status(500).json(err);
-//     }
-// });
-
 const threadRouter = express.Router();
 
 threadRouter.post("/create", isAuth, attachCurrentUser, async (req, res) => {
