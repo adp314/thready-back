@@ -1,8 +1,9 @@
 import express from "express";
-import { uploadImg } from "../config/cloudinary.config.js";
-const uploadImgRouter = express.Router();
+import { uploadImgMulter } from "../config/cloudinary.config.js";
 
-uploadImgRouter.post("/", uploadImg.single("picture"), (req, res) => {
+const uploadImageRouter = express.Router();
+
+uploadImageRouter.post("/", uploadImgMulter.single("picture"), (req, res) => {
   if (!req.file) {
     console.log(req.file);
     return res.status(400).json({ msg: "Upload fail" });
@@ -11,4 +12,4 @@ uploadImgRouter.post("/", uploadImg.single("picture"), (req, res) => {
   return res.status(201).json({ url: req.file.path });
 });
 
-export { uploadImgRouter };
+export { uploadImageRouter };

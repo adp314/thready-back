@@ -2,7 +2,7 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import express from "express";
 import { connectToDB } from "./config/db.config.js";
-import { uploadImgRouter } from "./routes/uploadImage.routes.js";
+import { uploadImageRouter } from "./routes/uploadImage.routes.js";
 import { userRouter } from "./routes/user.routes.js";
 import { threadRouter } from "./routes/thread.routes.js";
 
@@ -17,8 +17,8 @@ app.use(express.json());
 const API_VERSION = "1.0";
 
 app.use(`/api/${API_VERSION}/user`, userRouter);
-app.use(`/api/${API_VERSION}/uploadImage`, uploadImgRouter);
 app.use(`/api/${API_VERSION}/thread`, threadRouter);
+app.use(`/api/${API_VERSION}/upload-image`, uploadImageRouter);
 
 app.listen(Number(process.env.PORT), () => {
   console.log(`Server up and running at port ${process.env.PORT}`);

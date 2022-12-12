@@ -13,6 +13,7 @@ const userSchema = new Schema({
   passwordHash: { type: String, required: true },
   role: { type: String, enum: ["ADMIN", "USER"], default: "USER" },
   createdAt: { type: Date, default: Date.now() },
+  profileImg: {type: String, default: "https://res.cloudinary.com/adpinto314/image/upload/v1670882116/thready_profile_pictures/file_y06cl6.png"},
 });
 
 export const UserModel = model("User", userSchema);
