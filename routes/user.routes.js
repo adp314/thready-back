@@ -103,7 +103,7 @@ userRouter.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
 
       return res.status(200).json(updatedUser);
   }
-  catch {
+  catch (err){
       console.log(err);
       return res.status(500).json(err);
   }
