@@ -6,6 +6,7 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 import { UserModel } from "../model/user.model.js";
 
 import bcrypt from "bcrypt";
+import { ThreadModel } from "../model/thread.model.js";
 
 const SALT_ROUNDS = 10;
 
@@ -80,9 +81,52 @@ userRouter.get("/profile", isAuth, attachCurrentUser, (req, res) => {
   return res.status(200).json(loggedInUser);
 });
 
+userRouter.get("/search/:userName", async (req, res) => {
+  try {
+    const user = await UserModel.findOne({ userName: req.params.userName });
+    return res.status(201).json(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 
+userRouter.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
+  try {
+      const loggedInUser = req.currentUser;
 
-// Como vai funcionar edit de user??
-// Rota de delete user??
+      const updatedUser = await UserModel.findOneAndUpdate(
+          { _id: loggedInUser._id },
+          { ...req.body },
+          { new: true, runValidators: true }
+      )
+
+      return res.status(200).json(updatedUser);
+  }
+  catch {
+      console.log(err);
+      return res.status(500).json(err);
+  }
+});
+
+userRouter.delete("/delete", isAuth, attachCurrentUser, async (req, res) => {
+  try {
+      const loggedInUser = req.currentUser;
+
+      await ThreadModel.deleteOne(
+        { creator: loggedInUser._id },
+    );
+
+      const deleteUser = await UserModel.deleteOne({
+          _id: loggedInUser._id,
+        });
+
+      return res.status(200).json(deleteUser);
+  }
+  catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+  }
+});
 
 export { userRouter };
