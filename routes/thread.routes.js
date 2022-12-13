@@ -56,7 +56,9 @@ threadRouter.get("/byuser/:userID", async (req, res) => {
 
 threadRouter.get("/all", async (req, res) => {
     try {
-        const threadAll = await ThreadModel.find({});
+        const threadAll = await ThreadModel.find({})
+        .populate("creator", { userName: 1})
+    
         return res.status(200).json(threadAll);
     }
     catch (err){
