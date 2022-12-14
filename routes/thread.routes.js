@@ -26,18 +26,18 @@ threadRouter.post("/create", isAuth, attachCurrentUser, async (req, res) => {
 
         return res.status(201).json(newThread);
     }
-    catch {
+    catch (err){
         console.log(err);
         return res.status(500).json(err);
     }
 });
 
-threadRouter.get("/:threadID", async (req, res) => {
+threadRouter.get("/single/:threadID", async (req, res) => {
     try {
         const thread = await ThreadModel.findOne({ _id: req.params.threadID });
         return res.status(200).json(thread);
     }
-    catch {
+    catch (err) {
         console.log(err);
         return res.status(500).json(err);
     }
@@ -54,6 +54,19 @@ threadRouter.get("/byuser/:userID", async (req, res) => {
     }
 });
 
+threadRouter.get("/all", async (req, res) => {
+    try {
+        const threadAll = await ThreadModel.find({})
+        .populate("creator", { userName: 1})
+    
+        return res.status(200).json(threadAll);
+    }
+    catch (err){
+        console.log(err);
+        return res.status(500).json(err);
+    }
+});
+
 threadRouter.put("/edit/:threadID", isAuth, attachCurrentUser, async (req, res) => {
     try {
         const updatedThread = await ThreadModel.findOneAndUpdate(
@@ -64,7 +77,7 @@ threadRouter.put("/edit/:threadID", isAuth, attachCurrentUser, async (req, res) 
 
         return res.status(200).json(updatedThread);
     }
-    catch {
+    catch (err){
         console.log(err);
         return res.status(500).json(err);
     }

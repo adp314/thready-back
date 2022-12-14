@@ -9,7 +9,8 @@ const threadSchema = new Schema({
     "Footbal", "Home", "Phone", 
     "GOAT", "Seleção"]}],
   createdAt: { type: Date, default: Date.now() },
-  creator: { type: Types.ObjectId, ref: "User" }
+  creator: { type: Types.ObjectId, ref: "User" },
+  creatorName: [{ type: String, ref: "User" }]
 });
 
 export const ThreadModel = model("Thread", threadSchema);
