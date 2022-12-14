@@ -34,15 +34,16 @@ threadRouter.post("/create", isAuth, attachCurrentUser, async (req, res) => {
 
 threadRouter.get("/single/:threadID", async (req, res) => {
     try {
-        const thread = await ThreadModel.findOne({ _id: req.params.threadID }).populate();
+        const thread = await ThreadModel.findOne({ _id: req.params.threadID })
+        .populate("creator", { userName: 1, email: 1});
         return res.status(200).json(thread);
     }
     catch (err) {
         console.log(err);
         return res.status(500).json(err);
-    }
+    } 
 });
-
+  
 threadRouter.get("/byuser/:userID", async (req, res) => {
     try {
         const thread = await ThreadModel.find({ creator: req.params.userID });
