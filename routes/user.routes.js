@@ -75,10 +75,9 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
-userRouter.get("/profile", isAuth, attachCurrentUser, (req, res) => {
-  const loggedInUser = req.currentUser;
-
-  return res.status(200).json(loggedInUser);
+userRouter.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
+  const user = await UserModel.findOne({ _id: req.currentUser._id }).populate("threadsCreated");
+  return res.status(200).json(user);
 });
 
 userRouter.get("/search/:userName", async (req, res) => {

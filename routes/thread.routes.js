@@ -49,10 +49,10 @@ threadRouter.get("/byuser/:userID", async (req, res) => {
         const user = await UserModel.findOne({ _id: req.params.userID });
 
         return res.status(200).json({
-            user: user.userName,
+            userName: user.userName,
             email: user.email,
-            img: user.profileImg,
-            threads: thread
+            profileImg: user.profileImg,
+            threadsCreated: thread
         });
     }
     catch (err) {
