@@ -34,7 +34,7 @@ threadRouter.post("/create", isAuth, attachCurrentUser, async (req, res) => {
 
 threadRouter.get("/single/:threadID", async (req, res) => {
     try {
-        const thread = await ThreadModel.findOne({ _id: req.params.threadID });
+        const thread = await ThreadModel.findOne({ _id: req.params.threadID }).populate();
         return res.status(200).json(thread);
     }
     catch (err) {
