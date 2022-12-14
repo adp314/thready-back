@@ -46,9 +46,16 @@ threadRouter.get("/single/:threadID", async (req, res) => {
 threadRouter.get("/byuser/:userID", async (req, res) => {
     try {
         const thread = await ThreadModel.find({ creator: req.params.userID });
-        return res.status(200).json(thread);
+        const user = await UserModel.findOne({ _id: req.params.userID });
+
+        return res.status(200).json({
+            user: user.userName,
+            email: user.email,
+            img: user.profileImg,
+            threads: thread
+        });
     }
-    catch {
+    catch (err) {
         console.log(err);
         return res.status(500).json(err);
     }
