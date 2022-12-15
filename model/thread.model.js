@@ -6,8 +6,8 @@ const threadSchema = new Schema({
   likes: { type: Number, default: 0 },
   banner: {},
   tags: [{ type: String, enum: [
-    "Footbal", "Home", "Phone", 
-    "GOAT", "Seleção"]}],
+    "Sports", "Nature", "Tec", "Tv & Movies", "Music",
+    "Food", "Business", "Health", "Travel"]}],
   createdAt: { type: Date, default: Date.now() },
   creator: { type: Types.ObjectId, ref: "User" },
   creatorName: [{ type: String, ref: "User" }]
